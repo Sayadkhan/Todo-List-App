@@ -39,14 +39,18 @@ const TodoWrapper = () => {
   };
 
   const editTask = (task, id) => {
-    setTodos(
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, task, isEditing: !todo.isEditing } : todo
-      )
+    const newTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, task, isEditing: !todo.isEditing } : todo
     );
+    setTodos(newTodos);
+    localStorage.setItem("todos", JSON.stringify(newTodos));
   };
 
-  const deleteTodo = (id) => setTodos(todos.filter((todo) => todo.id !== id));
+  const deleteTodo = (id) => {
+    const newTodos = todos.filter((todo) => todo.id !== id);
+    setTodos(newTodos);
+    localStorage.setItem("todos", JSON.stringify(newTodos));
+  };
 
   return (
     <div className="flex flex-col items-center justify-center bg-black p-10">
