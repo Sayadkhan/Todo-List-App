@@ -2,11 +2,8 @@ import { LuClipboardEdit } from "react-icons/lu";
 import { MdDelete } from "react-icons/md";
 import { GrCompliance } from "react-icons/gr";
 import { RxCross1 } from "react-icons/rx";
-import { useState } from "react";
 
-const Todo = ({ todo, toggleComplete, deleteTodo, editTask }) => {
-  const [completeStatus, setCompletStatus] = useState("");
-
+const Todo = ({ todo, toggleComplete, deleteTodo, editTodo }) => {
   return (
     <div className="bg-white flex justify-between w-full mt-5 py-10 px-3">
       {/* <p>{todo?.task}</p> */}
@@ -32,7 +29,7 @@ const Todo = ({ todo, toggleComplete, deleteTodo, editTask }) => {
         </div>
       </div>
       <div className="flex gap-5">
-        <button onClick={() => editTask(todo.id)}>
+        <button onClick={() => editTodo(todo.id)}>
           <LuClipboardEdit />
         </button>
         <button onClick={() => deleteTodo(todo.id)}>
