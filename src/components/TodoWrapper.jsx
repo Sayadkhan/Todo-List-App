@@ -11,6 +11,14 @@ const TodoWrapper = () => {
     setTodos(savedTodos);
   }, []);
 
+  // const combinedData = todos.map((todo) => ({
+  //   ...todo,
+  //   completeTask: todo.filter((product) => product.category_id === category.id),
+  // }));
+
+  const completedTask = todos.filter((todo) => todo.completed === true);
+  console.log(completedTask);
+
   const addTodo = (todo) => {
     const newTodos = [
       ...todos,
@@ -53,17 +61,18 @@ const TodoWrapper = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center bg-black p-10">
+    <div className="flex flex-col  justify-center  p-10">
+      <div className="flex justify-between">
+        <div className="flex gap-5 my-5">
+          <span>Total Task : </span>
+          <span>{todos.length}</span>
+        </div>
+        <div className="flex gap-5 my-5">
+          <span>Completed Task : </span>
+          <span>{completedTask.length}</span>
+        </div>
+      </div>
       <TodoForm addTodo={addTodo} />
-      {/* {todos.map((todo) => (
-        <Todo
-          key={todo.id}
-          todo={todo}
-          toggleComplete={toggleComplete}
-          deleteTodo={deleteTodo}
-          editTask={editTask}
-        />
-      ))} */}
 
       {todos.map((todo) =>
         todo.isEditing ? (

@@ -10,20 +10,23 @@ const EditTodoForm = ({ editTask, todo }) => {
     setValue("");
   };
   return (
-    <form onSubmit={handleSubmit} className="w-full">
+    <form
+      onSubmit={handleSubmit}
+      className="bg-gray-900 container mx-auto flex justify-between p-10 mt-5"
+    >
       <input
         required
         type="text"
         onChange={(e) => setValue(e.target.value)}
         // value={formData.name}
         value={value}
-        className="px-3 py-2 w-full  rounded-md outline-none border focus:border-[#96680e] duration-300"
-        placeholder="Edit you name"
+        className="bg-transparent outline-none border-b-2 border-gray-400 py-2 px-5 focus:border-teal-600 text-white"
+        placeholder="What things to do?"
       />
 
       <button
         type="submit"
-        className="p-4 w-full rounded-md bg-red-600 hover:bg-[#3A3A3A]  text-white duration-300 flex items-center justify-center gap-5"
+        className="bg-teal-900/30 py-2 px-5 border-2 border-teal-500 rounded text-teal-500 hover:bg-teal-500 hover:text-gray-900 duration-300"
       >
         Update Task
       </button>
