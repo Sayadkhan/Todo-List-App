@@ -15,11 +15,6 @@ const TodoWrapper = () => {
     setTodos(savedTodos);
   }, []);
 
-  // const combinedData = todos.map((todo) => ({
-  //   ...todo,
-  //   completeTask: todo.filter((product) => product.category_id === category.id),
-  // }));
-
   const completedTask = todos.filter((todo) => todo.completed === true);
   const inCompletedTask = todos.filter((todo) => todo.completed === false);
 
