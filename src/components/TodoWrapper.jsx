@@ -74,25 +74,30 @@ const TodoWrapper = () => {
       <TodoForm addTodo={addTodo} />
       <div className=" flex flex-col  md:flex md:flex-row  items-center justify-center gap-5 mt-5">
         <button
-          className={`bg-teal-900/30 py-2 px-5 border-2 border-teal-500 rounded text-teal-500 hover:bg-teal-500 hover:text-gray-900 duration-300 w-full ${
-            isCompletedSceen === null && "active bg-teal-500 text-gray-900"
+          className={`${
+            isCompletedSceen === null
+              ? `active bg-teal-500 text-gray-900 py-2 px-5  w-full`
+              : `bg-teal-900/30 py-2 px-5 border-2 border-teal-500 rounded text-teal-500 hover:bg-teal-500 hover:text-gray-900 duration-300 w-full`
           }`}
           onClick={() => setIsCompletedSceen(null)}
         >
           All Todo
         </button>
         <button
-          className={`bg-teal-900/30 py-2 px-5 border-2 border-teal-500 rounded text-teal-500 hover:bg-teal-500 hover:text-gray-900 duration-300 w-full ${
-            isCompletedSceen === false && "active bg-teal-500 text-gray-900"
+          className={`${
+            isCompletedSceen === false
+              ? `active bg-teal-500 text-gray-900 py-2 px-5  w-full`
+              : `bg-teal-900/30 py-2 px-5 border-2 border-teal-500 rounded text-teal-500 hover:bg-teal-500 hover:text-gray-900 duration-300 w-full`
           }`}
           onClick={() => setIsCompletedSceen(false)}
         >
-          incomplete Task
+          Incomplete Task
         </button>
         <button
-          className={`bg-teal-900/30 py-2 px-5 border-2 border-teal-500 rounded text-teal-500 hover:bg-teal-500 hover:text-gray-900 duration-300 w-full ${
-            isCompletedSceen === true &&
-            "active active bg-teal-500 text-gray-900"
+          className={`${
+            isCompletedSceen === true
+              ? `active bg-teal-500 text-gray-900 py-2 px-5  w-full`
+              : `bg-teal-900/30 py-2 px-5 border-2 border-teal-500 rounded text-teal-500 hover:bg-teal-500 hover:text-gray-900 duration-300 w-full`
           }`}
           onClick={() => setIsCompletedSceen(true)}
         >
@@ -146,7 +151,7 @@ const TodoWrapper = () => {
                 )
               ) : (
                 <div className="flex items-center justify-center my-5">
-                  <p>There is no incomplete task </p>
+                  <p>There is no Incomplete task </p>
                 </div>
               )}
             </div>
