@@ -5,8 +5,6 @@ import EditTodoForm from "./EditTodoForm";
 
 const TodoWrapper = () => {
   const [todos, setTodos] = useState([]);
-  // const [completeTask, setCompleteTask] = useState([]);
-  // console.log(completeTask);
 
   const [isCompletedSceen, setIsCompletedSceen] = useState(null);
 
@@ -18,6 +16,7 @@ const TodoWrapper = () => {
   const completedTask = todos.filter((todo) => todo.completed === true);
   const inCompletedTask = todos.filter((todo) => todo.completed === false);
 
+  // function for add todo
   const addTodo = (todo) => {
     const newTodos = [
       ...todos,
@@ -28,6 +27,7 @@ const TodoWrapper = () => {
     localStorage.setItem("todos", JSON.stringify(newTodos));
   };
 
+  // function for todo complete or incomplete
   const toggleComplete = (id) => {
     const newTodos = todos.map((todo) =>
       todo.id === id ? { ...todo, completed: !todo.completed } : todo
@@ -37,6 +37,7 @@ const TodoWrapper = () => {
     localStorage.setItem("todos", JSON.stringify(newTodos));
   };
 
+  // function for open edittodo form
   const editTodo = (id) => {
     setTodos(
       todos.map((todo) =>
@@ -44,6 +45,8 @@ const TodoWrapper = () => {
       )
     );
   };
+
+  // function for edit todo task
 
   const editTask = (task, id) => {
     const newTodos = todos.map((todo) =>
@@ -53,6 +56,7 @@ const TodoWrapper = () => {
     localStorage.setItem("todos", JSON.stringify(newTodos));
   };
 
+  // function for remove todo
   const deleteTodo = (id) => {
     const newTodos = todos.filter((todo) => todo.id !== id);
     setTodos(newTodos);
@@ -71,7 +75,10 @@ const TodoWrapper = () => {
           <span>{completedTask.length}</span>
         </div>
       </div>
+      {/* Form for add todo task */}
       <TodoForm addTodo={addTodo} />
+
+      {/* Buttons for checking Task is complete or incompleted */}
       <div className=" flex flex-col  md:flex md:flex-row  items-center justify-center gap-5 mt-5">
         <button
           className={`${
@@ -105,6 +112,7 @@ const TodoWrapper = () => {
         </button>
       </div>
 
+      {/* Rendaring data Base on complete and ncompleted  */}
       {isCompletedSceen === null ? (
         <div>
           {todos.length > 0 ? (
@@ -128,7 +136,7 @@ const TodoWrapper = () => {
           )}
         </div>
       ) : (
-        <>
+        <div>
           {!isCompletedSceen ? (
             <div>
               {inCompletedTask.length > 0 ? (
@@ -182,7 +190,7 @@ const TodoWrapper = () => {
               )}
             </div>
           )}
-        </>
+        </div>
       )}
     </div>
   );
