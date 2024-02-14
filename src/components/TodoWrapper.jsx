@@ -5,7 +5,9 @@ import EditTodoForm from "./EditTodoForm";
 
 const TodoWrapper = () => {
   const [todos, setTodos] = useState([]);
+  const [filterTodos, setFilterTodos] = useState(todos);
 
+  useEffect(() => setFilterTodos(todos), [todos]);
   const [isCompletedSceen, setIsCompletedSceen] = useState(null);
 
   useEffect(() => {
@@ -20,7 +22,12 @@ const TodoWrapper = () => {
   const addTodo = (todo) => {
     const newTodos = [
       ...todos,
-      { id: Date.now(), task: todo, completed: false, isEditing: false },
+      {
+        id: Date.now(),
+        task: todo,
+        completed: false,
+        isEditing: false,
+      },
     ];
 
     setTodos(newTodos);
@@ -29,8 +36,22 @@ const TodoWrapper = () => {
 
   // function for todo complete or incomplete
   const toggleComplete = (id) => {
-    const newTodos = todos.map((todo) =>
+    const newTodos = todos?.map((todo) =>
       todo.id === id ? { ...todo, completed: !todo.completed } : todo
+    );
+
+    setTodos(newTodos);
+    localStorage.setItem("todos", JSON.stringify(newTodos));
+  };
+
+  const handlePriorityChange = (e, id) => {
+    const newTodos = todos?.map((todo) =>
+      todo.id === id
+        ? {
+            ...todo,
+            priority: e.target.value,
+          }
+        : todo
     );
 
     setTodos(newTodos);
@@ -61,6 +82,19 @@ const TodoWrapper = () => {
     const newTodos = todos.filter((todo) => todo.id !== id);
     setTodos(newTodos);
     localStorage.setItem("todos", JSON.stringify(newTodos));
+  };
+
+  const handlefilterTodo = (e) => {
+    console.log(e.target.value);
+    const { value, checked } = e.target;
+
+    if (checked) {
+      setFilterTodos((prevState) => {
+        return prevState.filter((todo) => todo.priority === value);
+      });
+    } else {
+      setFilterTodos(todos);
+    }
   };
 
   return (
@@ -112,11 +146,11 @@ const TodoWrapper = () => {
         </button>
       </div>
 
-      {/* Rendaring data Base on complete and ncompleted  */}
+      {/* Rendaring data Base on complete and incompleted  */}
       {isCompletedSceen === null ? (
         <div>
-          {todos.length > 0 ? (
-            todos.map((todo) =>
+          {filterTodos.length > 0 ? (
+            filterTodos.map((todo) =>
               todo.isEditing ? (
                 <EditTodoForm key={todo.id} editTask={editTask} todo={todo} />
               ) : (
@@ -126,6 +160,7 @@ const TodoWrapper = () => {
                   deleteTodo={deleteTodo}
                   editTodo={editTodo}
                   toggleComplete={toggleComplete}
+                  handlePriorityChange={handlePriorityChange}
                 />
               )
             )
@@ -154,6 +189,7 @@ const TodoWrapper = () => {
                       deleteTodo={deleteTodo}
                       editTodo={editTodo}
                       toggleComplete={toggleComplete}
+                      handlePriorityChange={handlePriorityChange}
                     />
                   )
                 )
@@ -180,6 +216,7 @@ const TodoWrapper = () => {
                       deleteTodo={deleteTodo}
                       editTodo={editTodo}
                       toggleComplete={toggleComplete}
+                      handlePriorityChange={handlePriorityChange}
                     />
                   )
                 )
@@ -192,6 +229,34 @@ const TodoWrapper = () => {
           )}
         </div>
       )}
+
+      {/* Filtering Opstion for Poirotiy */}
+      <div className="flex gap-5">
+        <div className="low">
+          <label>Low</label>
+          <input
+            onChange={(e) => handlefilterTodo(e)}
+            type="checkbox"
+            value={"Low"}
+          />
+        </div>
+        <div className="medium">
+          <label>Medium</label>
+          <input
+            onChange={(e) => handlefilterTodo(e)}
+            type="checkbox"
+            value={"Medium"}
+          />
+        </div>
+        <div className="high">
+          <label>High</label>
+          <input
+            onChange={(e) => handlefilterTodo(e)}
+            type="checkbox"
+            value={"High"}
+          />
+        </div>
+      </div>
     </div>
   );
 };
