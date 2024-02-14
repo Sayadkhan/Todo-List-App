@@ -32,8 +32,8 @@ const Todo = ({
         <button
           className={`${
             todo.priority === "Low"
-              ? "w-4 h-4 object-cover border-[2px] rounded-full bg-red-500"
-              : "w-4 h-4 object-cover border-[2px] rounded-full"
+              ? "w-5 h-5 object-cover border-[3px] border-white  bg-red-500  rounded-full "
+              : "w-5 h-5 object-cover  rounded-full bg-red-500"
           }`}
           value="Low"
           onClick={(e) => handlePriorityChange(e, todo.id)}
@@ -41,8 +41,8 @@ const Todo = ({
         <button
           className={`${
             todo.priority === "Medium"
-              ? "w-4 h-4 object-cover border-[2px] rounded-full bg-yellow-500"
-              : "w-4 h-4 object-cover border-[2px] rounded-full"
+              ? "w-5 h-5 object-cover border-[3px] border-white  rounded-full bg-yellow-500"
+              : "w-5 h-5 object-cover  rounded-full bg-yellow-500"
           }`}
           value="Medium"
           onClick={(e) => handlePriorityChange(e, todo.id)}
@@ -50,8 +50,8 @@ const Todo = ({
         <button
           className={`${
             todo.priority === "High"
-              ? "w-4 h-4 object-cover border-[2px] rounded-full bg-green-500"
-              : "w-4 h-4 object-cover border-[2px] rounded-full"
+              ? "w-5 h-5 object-cover border-[3px]  border-white rounded-full bg-green-500"
+              : "w-5 h-5 object-cover  rounded-full bg-green-500 "
           }`}
           value="High"
           onClick={(e) => handlePriorityChange(e, todo.id)}

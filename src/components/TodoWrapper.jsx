@@ -5,9 +5,9 @@ import EditTodoForm from "./EditTodoForm";
 
 const TodoWrapper = () => {
   const [todos, setTodos] = useState([]);
-  const [filterTodos, setFilterTodos] = useState(todos);
 
-  useEffect(() => setFilterTodos(todos), [todos]);
+  const [selectedPriorities, setSelectedPriorities] = useState([]);
+
   const [isCompletedSceen, setIsCompletedSceen] = useState(null);
 
   useEffect(() => {
@@ -85,20 +85,58 @@ const TodoWrapper = () => {
   };
 
   const handlefilterTodo = (e) => {
-    console.log(e.target.value);
     const { value, checked } = e.target;
 
     if (checked) {
-      setFilterTodos((prevState) => {
-        return prevState.filter((todo) => todo.priority === value);
-      });
+      setSelectedPriorities((prevState) => [...prevState, value]);
     } else {
-      setFilterTodos(todos);
+      setSelectedPriorities((prevState) =>
+        prevState.filter((priority) => priority !== value)
+      );
     }
   };
 
+  const filteredTodos = todos.filter((todo) => {
+    if (selectedPriorities.length === 0) return true;
+    return selectedPriorities.includes(todo.priority);
+  });
+
+  const InCompleteTaskFilteredTodos = inCompletedTask.filter((todo) => {
+    if (selectedPriorities.length === 0) return true;
+    return selectedPriorities.includes(todo.priority);
+  });
+
+  const completeTaskFilteredTodos = completedTask.filter((todo) => {
+    if (selectedPriorities.length === 0) return true;
+    return selectedPriorities.includes(todo.priority);
+  });
+
   return (
     <div className="flex flex-col  justify-center  p-10">
+      {/* Filtering Opstion for Poirotiy */}
+      <div className="flex flex-col justify-center items-center gap-5 ">
+        <span className="font-extrabold text-2xl text-[#14B8A6]">
+          Filter task by priority{" "}
+        </span>
+        <div className="flex gap-5">
+          <div className="low">
+            <input onChange={handlefilterTodo} type="checkbox" value={"Low"} />
+            <label>Low</label>
+          </div>
+          <div className="medium">
+            <input
+              onChange={handlefilterTodo}
+              type="checkbox"
+              value={"Medium"}
+            />
+            <label>Medium</label>
+          </div>
+          <div className="high">
+            <input onChange={handlefilterTodo} type="checkbox" value={"High"} />
+            <label>High</label>
+          </div>
+        </div>
+      </div>
       <div className="flex justify-between">
         <div className="flex gap-3 my-5">
           <span>Total Task : </span>
@@ -149,8 +187,8 @@ const TodoWrapper = () => {
       {/* Rendaring data Base on complete and incompleted  */}
       {isCompletedSceen === null ? (
         <div>
-          {filterTodos.length > 0 ? (
-            filterTodos.map((todo) =>
+          {filteredTodos.length > 0 ? (
+            filteredTodos.map((todo) =>
               todo.isEditing ? (
                 <EditTodoForm key={todo.id} editTask={editTask} todo={todo} />
               ) : (
@@ -174,8 +212,8 @@ const TodoWrapper = () => {
         <div>
           {!isCompletedSceen ? (
             <div>
-              {inCompletedTask.length > 0 ? (
-                inCompletedTask.map((todo) =>
+              {InCompleteTaskFilteredTodos.length > 0 ? (
+                InCompleteTaskFilteredTodos.map((todo) =>
                   todo.isEditing ? (
                     <EditTodoForm
                       key={todo.id}
@@ -201,8 +239,8 @@ const TodoWrapper = () => {
             </div>
           ) : (
             <div>
-              {completedTask.length > 0 ? (
-                completedTask.map((todo) =>
+              {completeTaskFilteredTodos.length > 0 ? (
+                completeTaskFilteredTodos.map((todo) =>
                   todo.isEditing ? (
                     <EditTodoForm
                       key={todo.id}
@@ -229,34 +267,6 @@ const TodoWrapper = () => {
           )}
         </div>
       )}
-
-      {/* Filtering Opstion for Poirotiy */}
-      <div className="flex gap-5">
-        <div className="low">
-          <label>Low</label>
-          <input
-            onChange={(e) => handlefilterTodo(e)}
-            type="checkbox"
-            value={"Low"}
-          />
-        </div>
-        <div className="medium">
-          <label>Medium</label>
-          <input
-            onChange={(e) => handlefilterTodo(e)}
-            type="checkbox"
-            value={"Medium"}
-          />
-        </div>
-        <div className="high">
-          <label>High</label>
-          <input
-            onChange={(e) => handlefilterTodo(e)}
-            type="checkbox"
-            value={"High"}
-          />
-        </div>
-      </div>
     </div>
   );
 };
